@@ -1,0 +1,11 @@
+logging:
+  pattern:
+    dateformat: MM-dd HH:mm:ss:SSS
+spring:
+  rabbitmq:
+    addresses: 101.35.240.17
+    port: 5672
+    username: itcast
+    password: 261806
+    virtual-host: /
+
