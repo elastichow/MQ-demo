@@ -38,4 +38,29 @@ public class SpringAmqpTest {
             Thread.sleep(20);
         }
     }
+
+    @Test
+    public void testSendFanoutExchange() {
+        String exchangeName = "chow.fanout";
+        String message = "hello, exchange";
+        rabbitTemplate.convertAndSend(exchangeName, "", message);
+    }
+
+
+    @Test
+    public void testSendDirectExchange() {
+        String exchangeName = "chow.direct";
+        String message = "hello, yellow";
+        rabbitTemplate.convertAndSend(exchangeName, "yellow", message);
+    }
+
+    @Test
+    public void testSendTopicExchange() {
+        String exchangeName = "chow.topic";
+        String message = "hello, topic";
+        rabbitTemplate.convertAndSend(exchangeName, "china.red", message);
+        rabbitTemplate.convertAndSend(exchangeName, "china.red.news", message);
+        rabbitTemplate.convertAndSend(exchangeName, "china.red.news.today", message);
+        rabbitTemplate.convertAndSend(exchangeName, "japan.today.news", message);
+    }
 }
