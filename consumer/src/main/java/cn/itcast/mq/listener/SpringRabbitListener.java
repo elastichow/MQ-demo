@@ -5,11 +5,11 @@ import org.springframework.amqp.rabbit.annotation.Exchange;
 import org.springframework.amqp.rabbit.annotation.Queue;
 import org.springframework.amqp.rabbit.annotation.QueueBinding;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
+
 import java.time.LocalTime;
+import java.util.Map;
 
 @Component
 public class SpringRabbitListener {
@@ -32,7 +32,6 @@ public class SpringRabbitListener {
         Thread.sleep(200);
     }
 
-
     @RabbitListener(queues = {"fanout.queue1"})
     public void listenFanoutQueue1(String msg) {
         System.out.println("消费者consumer 接收到 fanout.queue1 的消息 " + msg + " " + LocalTime.now());
@@ -42,7 +41,6 @@ public class SpringRabbitListener {
     public void listenFanoutQueue2(String msg) {
         System.out.println("消费者consumer 接收到 fanout.queue2 的消息 " + msg + " " + LocalTime.now());
     }
-
 
     @RabbitListener(bindings = @QueueBinding(
             value = @Queue(name = "direct.queue1"),
@@ -78,5 +76,10 @@ public class SpringRabbitListener {
     ))
     public void listenTopicQueue2(String msg) {
         System.out.println("消费者consumer, key = {\"*.news\"}  接收到 direct.queue2 的消息 " + msg);
+    }
+
+    @RabbitListener(queues = {"object.queue"})
+    public void listenObjectQueue(Map<String, Object> msg) {
+        System.out.println("接收到object.queue的消息: " + msg);
     }
 }
